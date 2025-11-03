@@ -30,6 +30,26 @@ int main(int argc, char *argv[]) {
 
     while (std::cin >> p)
         plist.push_back(p);
+	
+
+	auto it = plist.begin();
+	//person at target weight and gender
+	for(it = plist.begin(); it != plist.end();++it)
+		if((*it).getWeight() == targetWeight && (*it).getGender() == targetGender)
+			break;
+	if(it == plist.end())
+		std::cout << "No such Person at target weight and gender." << std::endl;
+	else
+		std::cout << *it << std::endl;
+
+	//person at or more than target BMI
+	for(it = plist.begin(); it != plist.end();++it)
+		if(BMI((*it).getWeight(),(*it).getHeight()) == targetBMI)
+			break;
+	if(it == plist.end())
+		std::cout << "No such Person at target BMI or higher ." << std::endl;
+	else
+		std::cout << *it << std::endl;
 
 
 	/*
