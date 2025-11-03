@@ -40,17 +40,17 @@ int main(int argc, char *argv[]) {
 	if(it == plist.end())
 		std::cout << "No such Person at target weight and gender." << std::endl;
 	else
-		std::cout << *it << std::endl;
+		std::cout << "Target weight and gender: " <<*it << std::endl;
 
 	//person at or more than target BMI
 	for(it = plist.begin(); it != plist.end();++it)
 		if(BMI((*it).getWeight(),(*it).getHeight()) == targetBMI)
 			break;
-	if(it == plist.end())
-		std::cout << "No such Person at target BMI or higher ." << std::endl;
+	if(it == plist.end()){
+		std::cout << "No such Person at target BMI or higher." << std::endl;
+	}
 	else
-		std::cout << *it << std::endl;
-
+		std::cout << "Target BMI: " << *it << std::endl;
 
 	/*
 	 * Students to do:
