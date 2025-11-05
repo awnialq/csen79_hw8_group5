@@ -8,6 +8,7 @@
 #include <map>
 #include <algorithm>
 #include "person.h"
+ 
 
 using namespace std;
 using namespace csen79;
@@ -15,6 +16,8 @@ using namespace csen79;
 inline double BMI(const double weight, const double height) {
 	return (weight / (height * height)) * 703.0;
 }
+
+
 
 int main(int argc, char *argv[]) {
     std::vector<Person> plist;
@@ -28,11 +31,87 @@ int main(int argc, char *argv[]) {
 											 {29.99, "Overweight"},
 											 {1000.0, "Obesity"}};
 
+	std::map<string, int> BMICount = {{"Underweight", 0},
+	                                         {"Normal weight", 0},
+											 {"Overweight" , 0},
+											 {"Obesity" , 0}};
+	
+
+	//lambda function for storting
+	auto lastname_compare = [](const Person& a, const Person& b)
+	{
+		if(a.getGender() == b.getGender())
+		{
+			return a.getLName() < b.getLName();
+		}
+		return a.getGender() < b.getGender();
+	};
+
+	//adding poeple into our vector(plist)
     while (std::cin >> p)
         plist.push_back(p);
 	
-
+	
+	//cacluating bmi for each perosn in (plist)
 	auto it = plist.begin();
+	while(it != plist.end())
+	{
+		double bmi_value = BMI((*it).getWeight(), (*it).getHeight());
+		//mapping a count to each BMI score
+		if(bmi_value < 18.85)
+		{
+			BMICount["Underweight"] ++;
+		}
+		else if(bmi_value < 24.99)
+		{
+			BMICount["Normal weight"] ++;
+		}
+		else if(bmi_value < 29.99)
+		{
+			BMICount["Overweight"] ++;
+		}
+		else
+		{
+			BMICount["Obesity"] ++;
+		}
+		++it;
+	}
+
+	//printing out the BMI percentages
+	std::cout << "BMI PERCENTAGE BY CATEGORY";
+	auto st = BMICount.begin();
+	while(st != BMICount.end())
+	{
+		string catagory = st ->first;
+		int count = st -> second;
+		int total_count = plist.size();
+		double percentage = (double)count / total_count * 100.0;
+		std::cout << st ->first << ": " << percentage << "%" << endl;
+		++st;
+	}
+	
+	//blank line for formatinng
+	std::cout << "\n" << endl;
+
+	//sorting the records by gender and lastname
+	std::cout << "Sorting Records By Gender" << endl;
+	std::sort(plist.begin(), plist.end(), lastname_compare);
+	auto ct = plist.begin();
+	while(ct != plist.end())
+	{
+		std::cout << *ct << endl;
+		++ct;
+	}
+
+	//person at target height
+	for(it = plist.begin(); it != plist.end();++it)
+		if((*it).getHeight() == targetHeight)
+			break;
+	if(it == plist.end())
+		std::cout << "No such Person at target height." << std::endl;
+	else
+		std::cout << "Target height: " <<*it << std::endl;
+	
 	//person at target weight and gender
 	for(it = plist.begin(); it != plist.end();++it)
 		if((*it).getWeight() == targetWeight && (*it).getGender() == targetGender)
@@ -51,6 +130,9 @@ int main(int argc, char *argv[]) {
 	}
 	else
 		std::cout << "Target BMI: " << *it << std::endl;
+
+	
+
 
 	/*
 	 * Students to do:
