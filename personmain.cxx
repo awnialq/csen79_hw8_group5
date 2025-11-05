@@ -1,5 +1,7 @@
 /*
  * Sin-Yaw Wang <swang24@scu.edu>
+ * Name: Isaac Amedie, Michael Tiburcio, Awni AlQuraini
+ * Email: iamedie@scu.edu, mtiburcio@scu.edu, aalquraini@scu.edu
  */
 #include <iostream>
 #include <iomanip>
@@ -123,7 +125,7 @@ int main(int argc, char *argv[]) {
 
 	//person at or more than target BMI
 	for(it = plist.begin(); it != plist.end();++it)
-		if(BMI((*it).getWeight(),(*it).getHeight()) == targetBMI)
+		if(BMI((*it).getWeight(),(*it).getHeight()) >= targetBMI)
 			break;
 	if(it == plist.end()){
 		std::cout << "No such Person at target BMI or higher." << std::endl;
